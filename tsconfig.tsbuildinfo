@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/detailview.tsx","./src/components/eventcard.tsx","./src/components/eventtree.tsx","./src/components/searchbar.tsx","./src/components/timelineruler.tsx","./src/lib/categories.ts","./src/lib/data.ts","./src/lib/dates.ts","./src/lib/router.ts","./src/lib/types.ts"],"version":"5.9.3"}
