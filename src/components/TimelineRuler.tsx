@@ -1,3 +1,4 @@
+import { CalendarRange, ChevronDown } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { governments, warLanes } from '../lib/data';
 import { END_YEAR, formatRange, START_YEAR, toYearFloat } from '../lib/dates';
@@ -158,25 +159,29 @@ export function TimelineRuler({ currentYear }: { currentYear: number }) {
 }
 
 /** Compact decade strip shown instead of the ruler on small screens. */
-export function MobileRuler({ currentYear }: { currentYear: number }) {
-  const decades = [];
-  for (let y = START_YEAR; y <= END_YEAR; y += 10) decades.push(y);
+const DECADES: number[] = [];
+for (let y = START_YEAR; y <= END_YEAR; y += 10) DECADES.push(y);
+const decadeLabel = (d: number) => (d < 2000 ? `שנות ה-${String(d).slice(2)}` : `${d}–${Math.min(d + 9, END_YEAR)}`);
+
+/** Compact decade jump that sits next to the search box; follows the scroll position. */
+export function DecadeSelect({ currentYear }: { currentYear: number }) {
+  const current = Math.min(currentYear - (currentYear % 10), DECADES[DECADES.length - 1]);
   return (
-    <nav className="flex gap-1 overflow-x-auto px-4 pb-2 md:hidden">
-      {decades.map((d) => {
-        const active = currentYear >= d && currentYear < d + 10;
-        return (
-          <button
-            key={d}
-            onClick={() => scrollToYear(d)}
-            className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold transition ${
-              active ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600'
-            }`}
-          >
-            {d < 2000 ? `שנות ה-${String(d).slice(2)}` : `${d}–${d + 9}`}
-          </button>
-        );
-      })}
-    </nav>
+    <label className="relative shrink-0">
+      <span className="sr-only">קפיצה לעשור</span>
+      <CalendarRange className="pointer-events-none absolute right-2.5 top-1/2 hidden h-4 w-4 -translate-y-1/2 text-indigo-500 sm:block" />
+      <select
+        value={current}
+        onChange={(e) => scrollToYear(Number(e.target.value))}
+        className="h-11 cursor-pointer appearance-none rounded-full border-2 border-slate-200 bg-white pl-6 pr-3 text-xs font-bold text-slate-700 outline-none transition hover:border-indigo-300 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 sm:pl-8 sm:pr-8 sm:text-sm"
+      >
+        {DECADES.map((d) => (
+          <option key={d} value={d}>
+            {decadeLabel(d)}
+          </option>
+        ))}
+      </select>
+      <ChevronDown className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400 sm:left-3 sm:h-4 sm:w-4" />
+    </label>
   );
 }

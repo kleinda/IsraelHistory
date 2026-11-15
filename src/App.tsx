@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { DetailView } from './components/DetailView';
 import { EventTree } from './components/EventTree';
 import { SearchBar } from './components/SearchBar';
-import { MobileRuler, TimelineRuler } from './components/TimelineRuler';
+import { DecadeSelect, TimelineRuler } from './components/TimelineRuler';
 import { CATEGORIES, inCategories } from './lib/categories';
 import { events } from './lib/data';
 import { START_YEAR } from './lib/dates';
@@ -77,7 +77,10 @@ export default function App() {
               </span>
             </span>
           </a>
-          <SearchBar />
+          <div className="flex w-full max-w-2xl items-center gap-2">
+            <SearchBar />
+            <DecadeSelect currentYear={currentYear} />
+          </div>
         </div>
         <div className="flex gap-1.5 overflow-x-auto px-4 pb-2.5">
           {CATEGORIES.map((c) => {
@@ -114,7 +117,6 @@ export default function App() {
             </button>
           </div>
         )}
-        <MobileRuler currentYear={currentYear} />
       </header>
 
       <TimelineRuler currentYear={currentYear} />
