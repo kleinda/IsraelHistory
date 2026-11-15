@@ -47,15 +47,9 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Each click shows only that category; clicking the active one again shows everything.
   const toggle = (id: CategoryId) =>
-    setActive((prev) => {
-      // First click isolates a category; later clicks add/remove.
-      if (prev.size === ALL.size) return new Set([id]);
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next.size === 0 ? ALL : next;
-    });
+    setActive((prev) => (prev.size === 1 && prev.has(id) ? ALL : new Set([id])));
 
   const filtered = active.size !== ALL.size;
   const shown = filtered ? events.filter((e) => inCategories(e, active)).length : events.length;
@@ -111,7 +105,6 @@ export default function App() {
             <span className="text-slate-700">
               מוצגים <b>{shown}</b> אירועים בקטגוריה:{' '}
               <b>{CATEGORIES.filter((c) => active.has(c.id)).map((c) => c.label).join(', ')}</b>
-              <span className="text-slate-500"> · אפשר ללחוץ על קטגוריות נוספות כדי להוסיף אותן</span>
             </span>
             <button
               onClick={() => setActive(ALL)}
