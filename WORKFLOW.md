@@ -1,6 +1,7 @@
 # תיעוד מהלכי עבודה – אתר היסטוריה של ישראל
 
 מאגר: https://github.com/kleinda/IsraelHistory
+אתר חי: https://israelhistory.vercel.app
 
 ---
 
@@ -113,6 +114,22 @@ git push                 # 5. שולחים ל-GitHub
 
 ## 5. פרסום ב-Vercel
 
+### המצב הנוכחי (מחובר ✓)
+| פרט | ערך |
+|---|---|
+| כתובת ראשית | https://israelhistory.vercel.app |
+| כתובת נוספת (אוטומטית) | https://israel-history-beta.vercel.app |
+| צוות ב-Vercel | David's projects (`davidklein1`) |
+| שם הפרויקט | `israel-history` |
+| מחובר למאגר | `kleinda/IsraelHistory`, ענף `main` |
+
+**עדכון האתר החי:** רק `git push`. Vercel בונה ומפרסם תוך כדקה.
+מעקב אחרי בנייה: https://vercel.com/davidklein1/israel-history
+
+### שינוי או הוספה של כתובת
+ב-Vercel נכנסים לפרויקט, ואז ל-**Settings → Domains**. מקלידים כתובת, למשל `xxx.vercel.app`, ולוחצים **Add**.
+
+### הקמה מאפס (אם פעם יהיה צורך)
 **האפשרות המומלצת היא חיבור קבוע ל-GitHub:**
 1. נכנסים ל-https://vercel.com ומתחברים עם GitHub.
 2. בוחרים **Add New → Project**, ואז את המאגר `IsraelHistory`, ולוחצים **Deploy**.
