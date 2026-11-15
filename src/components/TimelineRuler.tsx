@@ -1,5 +1,5 @@
 import { CalendarRange, ChevronDown } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { governments, warLanes } from '../lib/data';
 import { END_YEAR, formatRange, START_YEAR, toYearFloat } from '../lib/dates';
 import { scrollToYear } from '../lib/router';
@@ -159,6 +159,7 @@ export function TimelineRuler({ currentYear }: { currentYear: number }) {
 }
 
 /** Compact decade strip shown instead of the ruler on small screens. */
+const ALL_YEARS = 'all';
 const DECADES: number[] = [];
 for (let y = START_YEAR; y <= END_YEAR; y += 10) DECADES.push(y);
 const decadeLabel = (d: number) => (d < 2000 ? `שנות ה-${String(d).slice(2)}` : `${d}–${Math.min(d + 9, END_YEAR)}`);
@@ -166,15 +167,28 @@ const decadeLabel = (d: number) => (d < 2000 ? `שנות ה-${String(d).slice(2)
 /** Compact decade jump that sits next to the search box; follows the scroll position. */
 export function DecadeSelect({ currentYear }: { currentYear: number }) {
   const current = Math.min(currentYear - (currentYear % 10), DECADES[DECADES.length - 1]);
+  // At the very top the whole timeline is "in view", so the box reads "all years".
+  const [atTop, setAtTop] = useState(true);
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   return (
     <label className="relative shrink-0">
       <span className="sr-only">קפיצה לעשור</span>
       <CalendarRange className="pointer-events-none absolute right-2.5 top-1/2 hidden h-4 w-4 -translate-y-1/2 text-indigo-500 sm:block" />
       <select
-        value={current}
-        onChange={(e) => scrollToYear(Number(e.target.value))}
+        value={atTop ? ALL_YEARS : current}
+        onChange={(e) =>
+          e.target.value === ALL_YEARS
+            ? window.scrollTo({ top: 0, behavior: 'smooth' })
+            : scrollToYear(Number(e.target.value))
+        }
         className="h-11 cursor-pointer appearance-none rounded-full border-2 border-slate-200 bg-white pl-6 pr-3 text-xs font-bold text-slate-700 outline-none transition hover:border-indigo-300 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 sm:pl-8 sm:pr-8 sm:text-sm"
       >
+        <option value={ALL_YEARS}>כל השנים</option>
         {DECADES.map((d) => (
           <option key={d} value={d}>
             {decadeLabel(d)}
