@@ -4,7 +4,8 @@ import { DetailView } from './components/DetailView';
 import { EventTree } from './components/EventTree';
 import { SearchBar } from './components/SearchBar';
 import { DecadeSelect, TimelineRuler } from './components/TimelineRuler';
-import { CATEGORIES, inCategories } from './lib/categories';
+import { ChevronDown } from 'lucide-react';
+import { CATEGORIES, CATEGORY_BY_ID, inCategories } from './lib/categories';
 import { events } from './lib/data';
 import { START_YEAR } from './lib/dates';
 import { useRoute } from './lib/router';
@@ -52,6 +53,7 @@ export default function App() {
     setActive((prev) => (prev.size === 1 && prev.has(id) ? ALL : new Set([id])));
 
   const filtered = active.size !== ALL.size;
+  const activeCat = filtered && active.size === 1 ? CATEGORY_BY_ID[[...active][0]] : undefined;
   const shown = filtered ? events.filter((e) => inCategories(e, active)).length : events.length;
 
   // A new filter starts the reader at the first matching event, not wherever they were.
@@ -66,23 +68,43 @@ export default function App() {
         className="sticky top-0 z-40 border-b border-slate-200 bg-white/85 backdrop-blur-md"
       >
         <div className="flex flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:gap-6">
-          <a href="#" className="flex shrink-0 items-center gap-2">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 text-xl text-white shadow">
-              ✡
-            </span>
-            <span>
-              <span className="block font-display text-xl leading-none text-slate-900">ציר הזמן של ישראל</span>
-              <span className="text-xs font-medium text-slate-500">
-                1940–2026 · {events.length} אירועים
+          <div className="flex items-center justify-between gap-3">
+            <a href="#" className="flex shrink-0 items-center gap-2">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 text-xl text-white shadow">
+                ✡
               </span>
-            </span>
-          </a>
+              <span>
+                <span className="block font-display text-xl leading-none text-slate-900">ציר הזמן של ישראל</span>
+                <span className="text-xs font-medium text-slate-500">
+                  1940–2026 · {events.length} אירועים
+                </span>
+              </span>
+            </a>
+            {/* Phones: a combo box in the title row instead of the chip row, to save header height. */}
+            <label className="relative min-w-0 md:hidden">
+              <span className="sr-only">סינון לפי קטגוריה</span>
+              <select
+                value={filtered && active.size === 1 ? [...active][0] : ''}
+                onChange={(e) => setActive(e.target.value ? new Set([e.target.value as CategoryId]) : ALL)}
+                className="h-10 w-full max-w-[11rem] appearance-none truncate rounded-full border-2 bg-white pl-7 pr-3 text-xs font-bold outline-none focus:ring-4 focus:ring-indigo-100"
+                style={{ borderColor: activeCat?.color ?? '#e2e8f0', color: activeCat?.color ?? '#334155' }}
+              >
+                <option value="">כל הקטגוריות</option>
+                {CATEGORIES.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+            </label>
+          </div>
           <div className="flex w-full max-w-2xl items-center gap-2">
             <SearchBar />
             <DecadeSelect currentYear={currentYear} />
           </div>
         </div>
-        <div className="flex gap-1.5 overflow-x-auto px-4 pb-2.5">
+        <div className="hidden gap-1.5 overflow-x-auto px-4 pb-2.5 md:flex">
           {CATEGORIES.map((c) => {
             const on = filtered && active.has(c.id);
             return (
