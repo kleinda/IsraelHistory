@@ -1,0 +1,17 @@
+[
+  { "id": "p-weizmann", "person": "weizmann", "name": "חיים ויצמן", "start": "1948-05-16", "end": "1952-11-09", "note": "עד פברואר 1949 נשיא מועצת המדינה הזמנית; נפטר בתפקיד" },
+  { "id": "p-sprinzak", "name": "יוסף שפרינצק", "start": "1952-11-09", "end": "1952-12-16", "acting": true, "note": "יו״ר הכנסת, ממלא מקום הנשיא" },
+  { "id": "p-ben-zvi", "person": "ben-zvi", "name": "יצחק בן-צבי", "start": "1952-12-16", "end": "1963-04-23", "note": "נפטר בתפקיד" },
+  { "id": "p-luz", "name": "קדיש לוז", "start": "1963-04-23", "end": "1963-05-21", "acting": true, "note": "יו״ר הכנסת, ממלא מקום הנשיא" },
+  { "id": "p-shazar", "person": "shazar", "name": "זלמן שזר", "start": "1963-05-21", "end": "1973-05-24" },
+  { "id": "p-katzir", "person": "katzir", "name": "אפרים קציר", "start": "1973-05-24", "end": "1978-05-29" },
+  { "id": "p-navon", "person": "yitzhak-navon", "name": "יצחק נבון", "start": "1978-05-29", "end": "1983-05-05" },
+  { "id": "p-chaim-herzog", "person": "chaim-herzog", "name": "חיים הרצוג", "start": "1983-05-05", "end": "1993-05-13" },
+  { "id": "p-weizman", "person": "weizman", "name": "עזר ויצמן", "start": "1993-05-13", "end": "2000-07-13", "note": "התפטר" },
+  { "id": "p-burg", "name": "אברהם בורג", "start": "2000-07-13", "end": "2000-08-01", "acting": true, "note": "יו״ר הכנסת, ממלא מקום הנשיא" },
+  { "id": "p-katsav", "person": "katsav", "name": "משה קצב", "start": "2000-08-01", "end": "2007-01-25", "note": "השעה את עצמו בינואר 2007 והתפטר ב-1 ביולי" },
+  { "id": "p-itzik", "name": "דליה איציק", "start": "2007-01-25", "end": "2007-07-15", "acting": true, "note": "יו״ר הכנסת, ממלאת מקום הנשיא" },
+  { "id": "p-peres", "person": "peres", "name": "שמעון פרס", "start": "2007-07-15", "end": "2014-07-24" },
+  { "id": "p-rivlin", "person": "rivlin", "name": "ראובן ריבלין", "start": "2014-07-24", "end": "2021-07-07" },
+  { "id": "p-herzog", "person": "herzog", "name": "יצחק הרצוג", "start": "2021-07-07", "end": null }
+]

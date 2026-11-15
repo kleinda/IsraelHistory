@@ -2,7 +2,7 @@ import { Landmark, Swords } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { CATEGORY_BY_ID, inCategories } from '../lib/categories';
 import { eventById, governments, wars } from '../lib/data';
-import { compareDates, formatRange, yearOf } from '../lib/dates';
+import { clampToTimeline, compareDates, formatRange, yearOf } from '../lib/dates';
 import { href } from '../lib/router';
 import type { CategoryId, Government, HistEvent, War } from '../lib/types';
 import { EventCard } from './EventCard';
@@ -27,8 +27,8 @@ export function EventTree({ events, activeCategories, filtered }: Props) {
       ...events
         .filter((e) => inCategories(e, activeCategories))
         .map((e) => ({ kind: 'event' as const, date: e.date, event: e })),
-      ...(filtered ? [] : wars.map((w) => ({ kind: 'war' as const, date: w.start, war: w }))),
-      ...(filtered ? [] : governments.map((g) => ({ kind: 'gov' as const, date: g.start, gov: g }))),
+      ...(filtered ? [] : wars.map((w) => ({ kind: 'war' as const, date: clampToTimeline(w.start), war: w }))),
+      ...(filtered ? [] : governments.map((g) => ({ kind: 'gov' as const, date: clampToTimeline(g.start), gov: g }))),
     ].sort((a, b) => compareDates(a.date, b.date) || (a.kind === 'event' ? 1 : -1));
 
     const byYear = new Map<number, Item[]>();

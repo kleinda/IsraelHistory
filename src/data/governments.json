@@ -1,5 +1,5 @@
 [
-  { "id": "yishuv", "number": null, "pm": "ben-gurion", "pmName": "הנהגת היישוב · דוד בן-גוריון", "party": "יו״ר הנהלת הסוכנות היהודית", "start": "1940-01-01", "end": "1948-05-14", "color": "#64748b", "note": "תקופת המנדט הבריטי" },
+  { "id": "yishuv", "number": null, "pm": "ben-gurion", "pmName": "הנהגת היישוב · דוד בן-גוריון", "party": "יו״ר הנהלת הסוכנות היהודית", "start": "1935", "end": "1948-05-14", "color": "#64748b", "note": "תקופת המנדט הבריטי" },
   { "id": "gov-provisional", "number": null, "pm": "ben-gurion", "pmName": "הממשלה הזמנית · דוד בן-גוריון", "party": "מפא״י", "start": "1948-05-14", "end": "1949-03-10", "color": "#2563eb" },
   { "id": "gov-1", "number": 1, "pm": "ben-gurion", "pmName": "דוד בן-גוריון", "party": "מפא״י", "start": "1949-03-10", "end": "1950-11-01", "color": "#2563eb" },
   { "id": "gov-2", "number": 2, "pm": "ben-gurion", "pmName": "דוד בן-גוריון", "party": "מפא״י", "start": "1950-11-01", "end": "1951-10-08", "color": "#2563eb" },

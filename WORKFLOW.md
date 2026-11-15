@@ -93,6 +93,7 @@ publish.bat תיאור השינוי
 | `src/data/wars.json` | המלחמות |
 | `src/data/governments.json` | הממשלות |
 | `src/data/people.json` | האישים |
+| `src/data/presidents.json` | נשיאי המדינה וממלאי מקום (לדף "מנהיגים"); לנשיא האחרון `"end": null` |
 | `src/data/images.json` | **כתובות** התמונות (נוצר על ידי `npm run images`) |
 
 > התמונות **לא נשמרות במחשב**. הן נטענות ישירות מ-Wikimedia Commons, ולכן אין צורך להעביר אותן.

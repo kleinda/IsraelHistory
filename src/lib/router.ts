@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { Route } from './types';
 
 function parse(hash: string): Route {
+  if (hash === '#/leaders') return { type: 'leaders' };
   const m = hash.match(/^#\/(event|war|gov|person)\/(.+)$/);
   return m ? { type: m[1] as 'event', id: decodeURIComponent(m[2]) } : { type: 'home' };
 }
@@ -16,8 +17,8 @@ export function useRoute(): Route {
   return route;
 }
 
-export function href(type: 'event' | 'war' | 'gov' | 'person', id: string): string {
-  return `#/${type}/${encodeURIComponent(id)}`;
+export function href(type: 'event' | 'war' | 'gov' | 'person' | 'leaders', id?: string): string {
+  return id === undefined ? `#/${type}` : `#/${type}/${encodeURIComponent(id)}`;
 }
 
 export function navigate(type: 'event' | 'war' | 'gov' | 'person', id: string) {

@@ -55,6 +55,17 @@ export interface Government {
   note?: string;
 }
 
+export interface President {
+  id: string;
+  /** Link to people.json; acting presidents (Knesset speakers) have none */
+  person?: string;
+  name: string;
+  start: HDate;
+  end: HDate | null;
+  acting?: boolean;
+  note?: string;
+}
+
 export interface Person {
   id: string;
   name: string;
@@ -72,4 +83,5 @@ export interface WikiImage {
 
 export type Route =
   | { type: 'home' }
+  | { type: 'leaders' }
   | { type: 'event' | 'war' | 'gov' | 'person'; id: string };

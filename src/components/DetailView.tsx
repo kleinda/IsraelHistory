@@ -52,7 +52,7 @@ interface Model {
   next?: string;
 }
 
-function build(route: Exclude<Route, { type: 'home' }>): Model | null {
+function build(route: Exclude<Route, { type: 'home' | 'leaders' }>): Model | null {
   if (route.type === 'event') {
     const e = eventById.get(route.id);
     if (!e) return null;
@@ -158,7 +158,7 @@ function build(route: Exclude<Route, { type: 'home' }>): Model | null {
   };
 }
 
-export function DetailView({ route }: { route: Exclude<Route, { type: 'home' }> }) {
+export function DetailView({ route }: { route: Exclude<Route, { type: 'home' | 'leaders' }> }) {
   const m = build(route);
 
   useEffect(() => {
@@ -356,7 +356,7 @@ export function DetailView({ route }: { route: Exclude<Route, { type: 'home' }> 
   );
 }
 
-function Overlay({ children }: { children: React.ReactNode }) {
+export function Overlay({ children, closeSide = 'left' }: { children: React.ReactNode; closeSide?: 'left' | 'right' }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -367,7 +367,7 @@ function Overlay({ children }: { children: React.ReactNode }) {
     >
       <button
         onClick={closeDetail}
-        className="fixed left-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-slate-800 shadow-lg ring-1 ring-slate-200 backdrop-blur transition hover:scale-105"
+        className={`fixed ${closeSide === 'left' ? 'left-5' : 'right-3 md:right-5'} top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-slate-800 shadow-lg ring-1 ring-slate-200 backdrop-blur transition hover:scale-105`}
         aria-label="סגור"
       >
         <X className="h-6 w-6" />

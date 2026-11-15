@@ -41,3 +41,8 @@ export function formatRange(start: HDate, end: HDate | null): string {
 export function compareDates(a: HDate, b: HDate): number {
   return toYearFloat(a) - toYearFloat(b);
 }
+
+/** Where an item that began before the timeline (e.g. WWII in 1939) is placed: the first year shown. */
+export function clampToTimeline(d: HDate): HDate {
+  return yearOf(d) < START_YEAR ? String(START_YEAR) : d;
+}

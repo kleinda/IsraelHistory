@@ -2,8 +2,9 @@ import governmentsRaw from '../data/governments.json';
 import warsRaw from '../data/wars.json';
 import peopleRaw from '../data/people.json';
 import imagesRaw from '../data/images.json';
+import presidentsRaw from '../data/presidents.json';
 import { compareDates, toYearFloat } from './dates';
-import type { Government, HistEvent, Person, War, WikiImage } from './types';
+import type { Government, HistEvent, Person, President, War, WikiImage } from './types';
 
 const eventModules = import.meta.glob<{ default: HistEvent[] }>('../data/events/*.json', {
   eager: true,
@@ -17,6 +18,19 @@ export const governments = (governmentsRaw as Government[])
   .slice()
   .sort((a, b) => compareDates(a.start, b.start));
 export const people = peopleRaw as Person[];
+export const presidents = presidentsRaw as President[];
+
+/** Consecutive governments under the same PM merged into one term (state era only). */
+export const pmTerms = governments
+  .filter((g) => g.id !== 'yishuv')
+  .reduce<{ pm: string; start: string; end: string | null; color: string; govIds: string[] }[]>((terms, g) => {
+    const last = terms[terms.length - 1];
+    if (last && last.pm === g.pm) {
+      last.end = g.end;
+      last.govIds.push(g.id);
+    } else terms.push({ pm: g.pm, start: g.start, end: g.end, color: g.color, govIds: [g.id] });
+    return terms;
+  }, []);
 
 /** Keyed by "event:<id>", "war:<id>" or "person:<id>"; produced by scripts/fetch-images.mjs */
 export const images = imagesRaw as Record<string, WikiImage>;

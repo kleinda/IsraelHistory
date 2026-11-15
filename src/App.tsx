@@ -2,16 +2,18 @@ import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { DetailView } from './components/DetailView';
 import { EventTree } from './components/EventTree';
+import { LeadersView } from './components/LeadersView';
 import { SearchBar } from './components/SearchBar';
 import { DecadeSelect, TimelineRuler } from './components/TimelineRuler';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Crown } from 'lucide-react';
 import { CATEGORIES, CATEGORY_BY_ID, inCategories } from './lib/categories';
 import { events } from './lib/data';
 import { START_YEAR } from './lib/dates';
-import { useRoute } from './lib/router';
+import { href, useRoute } from './lib/router';
 import type { CategoryId } from './lib/types';
 
 const ALL = new Set(CATEGORIES.map((c) => c.id));
+const LEADERS = '__leaders';
 
 export default function App() {
   const route = useRoute();
@@ -85,11 +87,16 @@ export default function App() {
               <span className="sr-only">סינון לפי קטגוריה</span>
               <select
                 value={filtered && active.size === 1 ? [...active][0] : ''}
-                onChange={(e) => setActive(e.target.value ? new Set([e.target.value as CategoryId]) : ALL)}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  if (v === LEADERS) window.location.hash = href('leaders');
+                  else setActive(v ? new Set([v as CategoryId]) : ALL);
+                }}
                 className="h-10 w-full max-w-[11rem] appearance-none truncate rounded-full border-2 bg-white pl-7 pr-3 text-xs font-bold outline-none focus:ring-4 focus:ring-indigo-100"
                 style={{ borderColor: activeCat?.color ?? '#e2e8f0', color: activeCat?.color ?? '#334155' }}
               >
                 <option value="">כל הקטגוריות</option>
+                <option value={LEADERS}>👑 מנהיגים</option>
                 {CATEGORIES.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.label}
@@ -105,6 +112,14 @@ export default function App() {
           </div>
         </div>
         <div className="hidden gap-1.5 overflow-x-auto px-4 pb-2.5 md:flex">
+          <a
+            href={href('leaders')}
+            className="flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-l from-indigo-600 to-fuchsia-600 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:brightness-110"
+          >
+            <Crown className="h-3.5 w-3.5" />
+            מנהיגים
+          </a>
+          <span className="mx-1 w-px shrink-0 bg-slate-200" />
           {CATEGORIES.map((c) => {
             const on = filtered && active.has(c.id);
             return (
@@ -150,7 +165,13 @@ export default function App() {
         </footer>
       </main>
 
-      <AnimatePresence>{route.type !== 'home' && <DetailView key="detail" route={route} />}</AnimatePresence>
+      <AnimatePresence>
+        {route.type === 'leaders' ? (
+          <LeadersView key="leaders" />
+        ) : (
+          route.type !== 'home' && <DetailView key="detail" route={route} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
