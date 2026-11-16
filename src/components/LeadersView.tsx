@@ -154,8 +154,8 @@ export function LeadersView() {
 
 function ColumnTitle({ icon: Icon, label }: { icon: typeof Crown; label: string }) {
   return (
-    <div className="flex items-center justify-center gap-1.5 rounded-full bg-white px-1 py-2 text-xs font-bold text-slate-800 shadow-sm ring-1 ring-slate-200 md:gap-2 md:text-base">
-      <Icon className="hidden h-4 w-4 text-indigo-600 sm:block" />
+    <div className="flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-b from-amber-100 to-yellow-200 px-1 py-2 text-xs font-bold text-amber-950 shadow-sm ring-1 ring-amber-300 md:gap-2 md:text-base">
+      <Icon className="hidden h-4 w-4 text-amber-700 sm:block" />
       {label}
     </div>
   );
