@@ -55,9 +55,10 @@ export interface Government {
   note?: string;
 }
 
-export interface President {
+/** A president or IDF chief of staff, in office order. */
+export interface Officeholder {
   id: string;
-  /** Link to people.json; acting presidents (Knesset speakers) have none */
+  /** Link to people.json, when the person has a page */
   person?: string;
   name: string;
   start: HDate;

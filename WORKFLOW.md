@@ -94,6 +94,7 @@ publish.bat תיאור השינוי
 | `src/data/governments.json` | הממשלות |
 | `src/data/people.json` | האישים |
 | `src/data/presidents.json` | נשיאי המדינה וממלאי מקום (לדף "מנהיגים"); לנשיא האחרון `"end": null` |
+| `src/data/chiefs.json` | הרמטכ״לים (לדף "מנהיגים"); לרמטכ״ל המכהן `"end": null` |
 | `src/data/images.json` | **כתובות** התמונות (נוצר על ידי `npm run images`) |
 
 > התמונות **לא נשמרות במחשב**. הן נטענות ישירות מ-Wikimedia Commons, ולכן אין צורך להעביר אותן.

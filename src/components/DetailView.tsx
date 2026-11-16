@@ -367,7 +367,7 @@ export function Overlay({ children, closeSide = 'left' }: { children: React.Reac
     >
       <button
         onClick={closeDetail}
-        className={`fixed ${closeSide === 'left' ? 'left-5' : 'right-3 md:right-5'} top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-slate-800 shadow-lg ring-1 ring-slate-200 backdrop-blur transition hover:scale-105`}
+        className={`fixed ${closeSide === 'left' ? 'left-5 h-11 w-11' : 'right-2 h-9 w-9 md:right-5 md:h-11 md:w-11'} top-5 z-20 flex items-center justify-center rounded-full bg-white/90 text-slate-800 shadow-lg ring-1 ring-slate-200 backdrop-blur transition hover:scale-105`}
         aria-label="סגור"
       >
         <X className="h-6 w-6" />

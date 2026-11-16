@@ -3,8 +3,9 @@ import warsRaw from '../data/wars.json';
 import peopleRaw from '../data/people.json';
 import imagesRaw from '../data/images.json';
 import presidentsRaw from '../data/presidents.json';
+import chiefsRaw from '../data/chiefs.json';
 import { compareDates, toYearFloat } from './dates';
-import type { Government, HistEvent, Person, President, War, WikiImage } from './types';
+import type { Government, HistEvent, Officeholder, Person, War, WikiImage } from './types';
 
 const eventModules = import.meta.glob<{ default: HistEvent[] }>('../data/events/*.json', {
   eager: true,
@@ -18,7 +19,8 @@ export const governments = (governmentsRaw as Government[])
   .slice()
   .sort((a, b) => compareDates(a.start, b.start));
 export const people = peopleRaw as Person[];
-export const presidents = presidentsRaw as President[];
+export const presidents = presidentsRaw as Officeholder[];
+export const chiefs = chiefsRaw as Officeholder[];
 
 /** Consecutive governments under the same PM merged into one term (state era only). */
 export const pmTerms = governments

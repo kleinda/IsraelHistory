@@ -46,7 +46,7 @@ const Person = z
   })
   .strict();
 
-const President = z
+const Officeholder = z
   .object({
     id: z.string(), person: z.string().optional(), name: z.string(), start: hdate, end: hdate.nullable(),
     acting: z.boolean().optional(), note: z.string().optional(),
@@ -65,7 +65,8 @@ const parse = <T>(schema: z.ZodType<T>, items: unknown[], where: string): T[] =>
 const people = parse(Person, read('people.json'), 'people');
 const wars = parse(War, read('wars.json'), 'wars');
 const govs = parse(Gov, read('governments.json'), 'governments');
-const presidents = parse(President, read('presidents.json'), 'presidents');
+const presidents = parse(Officeholder, read('presidents.json'), 'presidents');
+const chiefs = parse(Officeholder, read('chiefs.json'), 'chiefs');
 const events = readdirSync(join(DATA, 'events'))
   .filter((f) => f.endsWith('.json'))
   .flatMap((f) => parse(Event, read(join('events', f)), f));
@@ -113,16 +114,18 @@ sorted.forEach((g, i) => {
   if (next && g.end !== next.start) errors.push(`government ${g.id} ends ${g.end} but ${next.id} starts ${next.start}`);
 });
 
-presidents.forEach((p, i) => {
-  if (p.person && !personIds.has(p.person)) errors.push(`president ${p.id}: unknown person "${p.person}"`);
-  const next = presidents[i + 1];
-  if (next && p.end !== next.start) errors.push(`president ${p.id} ends ${p.end} but ${next.id} starts ${next.start}`);
-  if (!next && p.end !== null) errors.push(`president ${p.id}: the last president must have end null`);
-});
+for (const [list, what] of [[presidents, 'president'], [chiefs, 'chief of staff']] as const) {
+  list.forEach((p, i) => {
+    if (p.person && !personIds.has(p.person)) errors.push(`${what} ${p.id}: unknown person "${p.person}"`);
+    const next = list[i + 1];
+    if (next && p.end !== next.start) errors.push(`${what} ${p.id} ends ${p.end} but ${next.id} starts ${next.start}`);
+    if (!next && p.end !== null) errors.push(`${what} ${p.id}: the last one must have end null`);
+  });
+}
 
 if (errors.length) {
   console.error(`✗ ${errors.length} problem(s):\n` + errors.map((e) => '  - ' + e).join('\n'));
   process.exit(1);
 }
 console.log(`  categories: ${[...counts].sort((a, b) => b[1] - a[1]).map(([c, n]) => `${c} ${n}`).join(', ')}`);
-console.log(`✓ ${events.length} events, ${wars.length} wars, ${govs.length} governments, ${people.length} people, ${presidents.length} presidents`);
+console.log(`✓ ${events.length} events, ${wars.length} wars, ${govs.length} governments, ${people.length} people, ${presidents.length} presidents, ${chiefs.length} chiefs of staff`);
