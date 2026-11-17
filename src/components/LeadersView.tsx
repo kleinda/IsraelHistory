@@ -109,7 +109,8 @@ export function LeadersView() {
             <ColumnTitle icon={Shield} label="רמטכ״לים" />
           </div>
 
-          <div className={`relative ${GRID}`} style={{ height }}>
+          {/* top margin keeps the half-height "1948" label clear of the sticky header */}
+          <div className={`relative mt-3 ${GRID}`} style={{ height }}>
             {/* year grid */}
             {years.map((yr) => (
               <div
